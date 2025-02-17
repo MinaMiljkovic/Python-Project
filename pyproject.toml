@@ -5,7 +5,6 @@ description = ""
 authors = [
     {name = "Your Name",email = "you@example.com"}
 ]
-readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
 ]
@@ -14,3 +13,25 @@ dependencies = [
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.group.api.dependencies]
+fastapi = "^0.115.8"
+psycopg2-binary = "^2.9.10"
+sqlalchemy = "^2.0.38"
+alembic = "^1.14.1"
+pydantic-settings = "^2.7.1"
+
+
+[tool.poetry.group.lambda.dependencies]
+pillow = "^11.1.0"
+
+
+[tool.poetry.group.dev.dependencies]
+boto3 = "^1.36.22"
+ruff = "^0.9.6"
+pre-commit = "^4.1.0"
+pytest = "^8.3.4"
+pytest-cov = "^6.0.0"
+pytest-mock = "^3.14.0"
+moto = "^5.0.28"
+
