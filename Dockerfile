@@ -3,10 +3,8 @@ FROM python:3.12 AS builder
 
 WORKDIR /app
 
-# Install Poetry
 RUN pip install poetry
 
-# Copy project files
 COPY pyproject.toml poetry.lock ./
 RUN poetry config virtualenvs.create false && poetry install --only api --no-root
 RUN poetry add uvicorn
@@ -26,5 +24,4 @@ COPY --from=builder /usr/local/lib/python3.12/site-packages /usr/local/lib/pytho
 COPY --from=builder /usr/local/bin /usr/local/bin
 COPY src .
 
-# Set entrypoint script
 CMD ["sh", "./entrypoint.sh"]
