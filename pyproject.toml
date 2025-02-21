@@ -1,14 +1,9 @@
 [project]
 name = "python-project"
 version = "0.1.0"
-description = ""
-authors = [
-    {name = "Your Name",email = "you@example.com"}
-]
 requires-python = ">=3.12"
 dependencies = [
 ]
-
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
@@ -34,4 +29,56 @@ pytest = "^8.3.4"
 pytest-cov = "^6.0.0"
 pytest-mock = "^3.14.0"
 moto = "^5.0.28"
+mypy = "^1.15.0"
 
+
+[tool.ruff]
+line-length = 120
+show-fixes = true
+exclude = [
+  ".git",
+]
+
+[tool.ruff.lint]
+select = [
+  "F",        # pyflakes
+  "E",        # pycodestyle errors
+  "W",        # pycodestyle warnings
+  "I",        # isort
+  "C4",       # flake8-comprehensions
+  "B",        # flake8-bugbear
+  "T20",      # flake8-print
+  "ASYNC",    # asyncio
+  "TID252",   # flake8-tidy-imports, prefer absolute imports over relative imports from parent modules
+]
+ignore = [
+  "B904",
+  "B008",
+]
+fixable = ["ALL"]
+
+
+[tool.ruff.lint.flake8-bugbear]
+extend-immutable-calls = ["fastapi.Depends", "fastapi.params.Depends", "fastapi.Query", "fastapi.params.Query"]
+
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "auto"
+skip-magic-trailing-comma = false
+
+
+[tool.mypy]
+ignore_missing_imports = true
+allow_redefinition = false
+check_untyped_defs = true
+ignore_errors = false
+implicit_reexport = false
+local_partial_types = true
+strict_optional = true
+strict_equality = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_configs = true
+warn_no_return = true
