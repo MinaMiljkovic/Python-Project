@@ -1,10 +1,10 @@
-from fastapi import FastAPI
+from fastapi import APIRouter, Depends
+from sqlalchemy.orm import Session
+from data_base.database import get_db
 
-app = FastAPI()
+router = APIRouter()
 
-@app.get("/health")
-def health():
+@router.get("/health")
+def health_check(db: Session = Depends(get_db)):
     return {"status": "ok"}
 
-#import uvicorn
-#uvicorn.run(app, host="0.0.0.0", port=8000)
