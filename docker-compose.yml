@@ -13,13 +13,30 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
+  pgbouncer:
+    image: edoburu/pgbouncer
+    container_name: pgbouncer
+    restart: always
+    depends_on:
+      - db
+    environment:
+      DB_USER: user
+      DB_PASSWORD: password
+      DB_NAME: mydb
+      POOL_MODE: transaction  # "session" and "statement" are also available
+      MAX_CLIENT_CONN: 100
+      DEFAULT_POOL_SIZE: 20
+    ports:
+      - "6432:6432"
+
   backend:
     build: .
     container_name: fastapi_backend
     ports:
       - "8000:8000"
     depends_on:
-      - db
+      - pgbouncer  # Now depends on PgBouncer instead of directly on db
 
 volumes:
   postgres_data:
+
