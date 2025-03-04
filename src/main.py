@@ -1,10 +1,17 @@
-from fastapi import APIRouter, Depends
+from fastapi import Depends, FastAPI
+import logging
 from sqlalchemy.orm import Session
-from data_base.database import get_db
+from data_base.session_manager import get_db
+from users import router as users_router
 
-router = APIRouter()
 
-@router.get("/health")
-def health_check(db: Session = Depends(get_db)):
+app = FastAPI()
+logger = logging.getLogger(__name__)
+routers = [users_router]
+for router in routers:
+    app.include_router(router.router)
+
+@app.get("/health")
+async def health_check():
+    logger.info("Received a request to check health.")
     return {"status": "ok"}
-
